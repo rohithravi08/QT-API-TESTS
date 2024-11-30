@@ -1,0 +1,12 @@
+services:
+  test:
+    image: jest-test
+    environment:
+      - NODE_ENV=${NODE_ENV}
+      - TOKEN=${TOKEN}
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    command: ["npx", "cross-env", "TOKEN=${TOKEN}", "NODE_ENV=${NODE_ENV}", "npm", "test"]
+    volumes:
+      - .:/app

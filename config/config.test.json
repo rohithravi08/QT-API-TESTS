@@ -1,0 +1,7 @@
+{
+    "baseURL": "https://test-gorest.co.in",
+    "apiPaths": {
+      "users": "/public/v2/users"
+    }
+}
+  

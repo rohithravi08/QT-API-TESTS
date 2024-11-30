@@ -1,0 +1,18 @@
+# Node.js
+node_modules
+npm-debug.log
+
+# Git and other VCS
+.git/
+.gitignore
+
+# Docker-related files
+Dockerfile
+docker-compose.yml
+
+#coverage
+coverage/
+
+# Ignore test reports (Jest output)
+test-reports/
+
