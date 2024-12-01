@@ -14,10 +14,10 @@ jobs:
 
     steps:
     - name: Checkout Code
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
 
     - name: Set up Node.js
-      uses: actions/setup-node@v3
+      uses: actions/setup-node@v4
       with:
         node-version: '18'
 
@@ -28,15 +28,12 @@ jobs:
       run: |
         npx cross-env TOKEN="${{ secrets.TOKEN }}" NODE_ENV="production" npm test
 
-    - name: List files in test-reports directory
-      run: |
-        ls -R test-reports/
-
     - name: Upload Jest Test Reports
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: jest-test-report
         path: |
           test-reports/test-report.html
           test-reports/jest-test-report.xml
+          coverage/Icov-report/index.html
           
