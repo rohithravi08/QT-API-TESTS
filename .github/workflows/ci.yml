@@ -28,11 +28,15 @@ jobs:
       run: |
         npx cross-env TOKEN="${{ secrets.TOKEN }}" NODE_ENV="production" npm test
 
+    - name: List files in test-reports directory
+      run: |
+        ls -R test-reports/
+
     - name: Upload Jest Test Reports
       uses: actions/upload-artifact@v3
       with:
         name: jest-test-report
         path: |
-          test-reports/test-report.html  # Modify this path to where the HTML reports are generated
-          test-reports/jest-test-report.xml  # Modify this path to where the XML reports are generated
-          coverage/lcov-report/           # Include the coverage folder or other reports
+          test-reports/test-report.html
+          test-reports/jest-test-report.xml
+          
