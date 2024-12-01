@@ -51,7 +51,7 @@ Location: coverage/lcov-report/index.html
 Provides a detailed breakdown of test coverage, highlighting which parts of the code are tested and which are not.
 
 
-## Directory Structure
+## Project Structure
 ```
 QT-API-TESTS/
 ├── .github\workflows       # ci configuration files
