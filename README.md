@@ -54,6 +54,8 @@ Provides a detailed breakdown of test coverage, highlighting which parts of the 
 ## Directory Structure
 ```
 QT-API-TESTS/
+├── .github\workflows       # ci configuration files
+│   └── ci.yml              # github ci pipeline configuration
 ├── config                  # Configuration files (base URL, API paths, environment settings)
 │   └── index.js            # To fetch the NODE_ENV from the CLI
 ├── data                    # Sample data files (e.g., requestBody.json)
