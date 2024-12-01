@@ -1,6 +1,5 @@
-name: Run Tests and Build Docker Image
+name: Run Tests
 
-# Trigger the workflow on push or pull request events
 on:
   push:
     branches:
@@ -9,54 +8,48 @@ on:
     branches:
       - main
 
-# Define the jobs
 jobs:
-  test:
+  run-tests:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v3
+      - name: Checkout repository
+        uses: actions/checkout@v3
 
-    - name: Set up Docker
+      - name: Set up Docker
         uses: docker/setup-buildx-action@v2
         with:
           version: latest
-          
-    - name: Set up Node.js
-      uses: actions/setup-node@v3
-      with:
-        node-version: '18'
 
-    - name: Install dependencies
-      run: npm ci
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
 
-    - name: Run Tests Locally
-      run: |
-        npx cross-env TOKEN="${{ secrets.TOKEN }}" NODE_ENV="production" npm test  # Run tests locally
+      - name: Install dependencies
+        run: npm ci
 
-    - name: Run Tests in Docker
-      run: |
-        npx cross-env TOKEN="${{ secrets.TOKEN }}" NODE_ENV="production" docker-compose up --build --abort-on-container-exit  # Run tests in Docker
+      - name: Install Docker Compose
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y docker-compose
 
-    - name: Generate Test Reports
-      run: |
-        if [ -d "test-reports" ]; then
-          echo "Test reports generated at test-reports directory"
-        fi
-        if [ -d "coverage" ]; then
-          echo "Coverage reports generated at coverage directory"
-        fi
+      - name: Run Tests Locally
+        run: |
+          npx cross-env TOKEN="${{ secrets.TOKEN }}" NODE_ENV="production" npm test
 
-    - name: Upload Coverage Report
-      uses: actions/upload-artifact@v3
-      with:
-        name: coverage-report
-        path: coverage/lcov-report
+      - name: Run Tests in Docker
+        run: |
+          npx cross-env TOKEN="${{ secrets.TOKEN }}" NODE_ENV="production" docker-compose up --build --abort-on-container-exit
 
-    - name: Upload Test Reports
-      uses: actions/upload-artifact@v3
-      with:
-        name: test-reports
-        path: test-reports/
+      - name: Upload Test Reports
+        uses: actions/upload-artifact@v3
+        with:
+          name: test-reports
+          path: ./test-reports/
 
+      - name: Upload Coverage Report
+        uses: actions/upload-artifact@v3
+        with:
+          name: coverage-report
+          path: ./coverage/
